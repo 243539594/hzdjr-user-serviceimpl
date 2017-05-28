@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" 
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+       					   http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+
+	<dubbo:application name="hzdjr_user_service" organization="com.hz.hzdjr" owner="lch" />
+	<dubbo:provider id="hzdjr_user_provider" protocol="${dubbo.provider.protocol}" threads="${dubbo.provider.threads}" timeout="${dubbo.provider.timeout}" delay="${dubbo.provider.delay}" retries="${dubbo.provider.retries}" loadbalance="${dubbo.provider.loadbalance}" token="${dubbo.provider.token}" layer="hzdjr:user_service" />
+	<dubbo:consumer init="${dubbo.consumer.init}" check="${dubbo.consumer.check}" connections="${dubbo.consumer.connections}" owner="ldr" layer="hzdjr:user_service" />
+	<dubbo:registry address="${dubbo.registry.address}" client="${dubbo.registry.client}" group="${dubbo.registry.group}" />
+	<dubbo:protocol name="dubbo" port="${dubbo.protocol.dubbo.port}" />
+	
+	<!-- 通过注册中心发现监控中心服务 -->
+	<dubbo:monitor protocol="registry" />
+	
+	<dubbo:service interface="com.hz.hzdjr.example.service.DemoService" ref="demoService" version="1.0" executes="200" />
+	<dubbo:service interface="com.hz.hzdjr.borrow.service.BorrowService" ref="borrowService" version="1.0" executes="200" />
+</beans>
